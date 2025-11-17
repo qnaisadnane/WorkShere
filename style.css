@@ -2,4 +2,71 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    overflow-x: hidden;
+}
+.barlow-semi-condensed-thin {
+  font-family: "Barlow Semi Condensed", sans-serif;
+  font-style: normal;
+}
+
+.global-section{
+    width: 100%;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    background-color: #fff;
+}
+
+.global-div{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    margin: 0 25px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+}
+
+.sidebar-staff h2{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.add-worker{
+    margin: 10px 0 0 0;
+    background-color: rgb(5, 216, 5);
+    color: #fff;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-size: 19px;
+    font-weight: 800;
+    border: none;
+    border-radius: 20px;
+    width: 150px;
+    height: 35px;
+}
+
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffffab;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-content{
+    background: white;
+    max-width: 900px;
+    border-radius: 16px;
+    margin: 40px auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+form {
+    padding: 24px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
 }

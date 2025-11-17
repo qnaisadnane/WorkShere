@@ -15,6 +15,30 @@ const closebtn = document.querySelector('.close-btn');
 const cancelbtn = document.getElementById('btn-cancel-form');
 const form = document.getElementById('add-worker-form');
 
+function createEmployee(name , role , photoUrl , email , phone , experiences = []) {
+  return {
+  id : nextId++,
+  name : name,
+  photoUrl : photoUrl,
+  email : email,
+  experiences : experiences,
+  zoneassigne : null
+  };
+}
+
+function addEmployee(name , role , photoUrl, email , phone , experiences){
+const newEmployee = createEmployee(name , role , photoUrl, email , phone , experiences);
+employees.push(newEmployee);
+console.log("employe ajoute :" , newEmployee);
+return newEmployee;
+}
+
+function removeEmployee(id){
+    employees = employees.filter(emp => emp.id !== id);
+    console.log("employe supprime, id :" , id);
+}
+
+
 openbtn.addEventListener('click', () => {
     modal.style.display = 'flex';
 });
@@ -102,25 +126,4 @@ function getzonebyId(id){
    return zone.find (z => z.id === id);
 }
 
-function createEmployee(name , role , photoUrl , email , phone , experiences = []) {
-  return {
-  id : nextId++,
-  name : name,
-  photoUrl : photoUrl,
-  email : email,
-  experiences : experiences,
-  zoneassigne : null
-  };
-}
 
-function addEmployee(name , role , photoUrl, email , phone , experiences){
-const newEmployee = createEmployee(name , role , photoUrl, email , phone , experiences);
-employees.push(newEmployee);
-console.log("employe ajoute :" , newEmployee);
-return newEmployee;
-}
-
-function removeEmployee(id){
-    employees = employees.filter(emp => emp.id !== id);
-    console.log("employe supprime, id :" , id);
-}
