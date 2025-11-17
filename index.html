@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkSphere</title>
+</head>
+<body>
+    <div id="grobal-div" class="global-div">
+     <div id="sidebar-staff" class="sidebar-staff">
+        <h2>Staff</h2>
+
+        <button id="add-worker-btn" class="add-worker">Add New Worker</button>
+
+        <div id="add-worker-modal" class="modal" style="display: none;">
+        <div>
+            <div class="modal-content">
+             <div class="modal-header">
+              <h2>Add Worker</h2>
+              <span class="close-btn">&times;</span>
+             </div>
+             <form id="add-worker-form">
+              
+             <label for="Name">Full Name</label>
+             <input type="text" id="name" placeholder="Enter your name">
+             <label for="role">Role</label>
+
+             <select name="" id="">
+                <option value="">Selectionner un role</option>
+                <option value="Receptionnistes">Receptionnistes</option>
+                <option value="Techniciens IT">Techniciens IT</option>
+                <option value="Manager">Manager</option>
+                <option value="Nettoyage">Nettoyage</option>
+                <option value="Developpeur">Developpeur</option>
+                <option value="Comptable">Comptable</option>
+             </select>
+             
+             <label for="photo">Photo (URL)</label>
+             <input type="url" id="photo" placeholder="https://exemple.com/photo.jpg">
+
+             <label for="photo">Email</label>
+             <input type="email" id="email" placeholder="Enter your email">
+
+             <label for="photo">Phone</label>
+             <input type="text" id="phone" placeholder="Enter your phone">
+
+             <div class="btn-form">
+             <button type="submit" id="btn-add-form" class="btn-add">Add</button>
+             <button type="button" id="btn-cancel-form" class="btn-cancel">Cancel</button>
+             </div>
+
+             </form>
+            </div>
+        </div>
+        </div>
+     </div>
+     <div id="worksphere-div" class="worksphere-div">
+        <h1>WorkSphere</h1>
+        <div class="zone-grid" id="zone-grid">
+           <img src="worksphere.jpg" alt="worksphere">
+        </div>
+     </div>
+    </div>
+</body>
+</html>
