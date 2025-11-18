@@ -11,7 +11,6 @@ let zone =[
 
 const modal = document.getElementById('add-worker-modal');
 const openbtn = document.getElementById('add-worker-btn');
-const closebtn = document.querySelector('.close-btn');
 const cancelbtn = document.getElementById('btn-cancel-form');
 const form = document.getElementById('add-worker-form');
 
@@ -43,7 +42,7 @@ openbtn.addEventListener('click', () => {
     modal.style.display = 'flex';
 });
 
-closebtn.addEventListener('click' , closeModal);
+
 cancelbtn.addEventListener('click' , closeModal);
 
 window.addEventListener('click' ,(e) => {
@@ -71,6 +70,34 @@ closeModal();
 }
 });
 
+
+function unsignedStaff() {
+const list = document.getElementById('unassigned-list');
+list.innerHTML= '';
+const unassigned = employees.filter(emp => !emp.location);
+
+if(unassigned.length === 0){
+    list.innerHTML = `
+          <li class="empty-message">
+          Aucun employe non assigne
+          </li> `;
+          return;
+}
+unassigned.forEach(emp => {
+const item = document.createElement('li');
+item.className = 'staff-list';
+item.innerHTML = `
+ <img src="${emp.photo}" alt="${emp.name}">
+ <div>
+ <strong>${emp.name}</strong>
+ <span>${emp.role}</span>
+ </div>
+ `;
+ list.appendChild(item);
+});
+}
+
+document.addEventListener('DOMContentLoaded' , unsignedStaff);
 
 function validateForm(){
     let isvalid = true;
