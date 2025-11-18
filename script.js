@@ -13,6 +13,10 @@ const modal = document.getElementById('add-worker-modal');
 const openbtn = document.getElementById('add-worker-btn');
 const cancelbtn = document.getElementById('btn-cancel-form');
 const form = document.getElementById('add-worker-form');
+const photoUrl = document.getElementById('photo');
+const photopreview  = document.getElementById('photo-live');
+const experiencescontainer = document.getElementById('experiences-container');
+const addexperiencebtn = document.getElementById('add-experience-btn');
 
 function createEmployee(name , role , photoUrl , email , phone , experiences = []) {
   return {
@@ -59,7 +63,7 @@ e.preventDefault();
 
 if( validateForm()){
 const name = document.getElementById('name').value.trim();
-const role = document.getElementById('role').value;
+const role = document.getElementById('select-role').value;
 const photoUrl = document.getElementById('photo').value.trim();
 const email = document.getElementById('email').value.trim();
 const phone = document.getElementById('phone').value.trim();
@@ -74,7 +78,7 @@ closeModal();
 function unsignedStaff() {
 const list = document.getElementById('unassigned-list');
 list.innerHTML= '';
-const unassigned = employees.filter(emp => !emp.location);
+const unassigned = employees.filter(emp => emp.zoneassigne === null);
 
 if(unassigned.length === 0){
     list.innerHTML = `
@@ -110,7 +114,7 @@ function validateForm(){
     }
 
     const email = document.getElementById('email').value;
-    const emailRegex = /^$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if(!email){
     errors.push("please select a email");
     isvalid = false;
@@ -120,7 +124,7 @@ function validateForm(){
     }
 
     const phone = document.getElementById('phone').value;
-    const phoneRegex = /^$/;
+    const phoneRegex = /^\d{10}$/;
     if(!phone){
     errors.push("please select a email");
     isvalid = false;
@@ -153,4 +157,18 @@ function getzonebyId(id){
    return zone.find (z => z.id === id);
 }
 
+photoUrl.addEventListener('input', () => {
+  const url = photoUrl.value.trim();
+  if (url && url.startsWith('http')) {
+    photopreview.src = url;
+    photopreview.onerror = () => {
+      photopreview.src = 'https://via.placeholder.com/150?text=Invalid';
+    };
+  } else {
+    photopreview.src = 'https://via.placeholder.com/150?text=Photo';
+  }
+});
 
+// function addExperience() {
+//     const div = document.
+// }

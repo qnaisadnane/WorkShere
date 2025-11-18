@@ -96,6 +96,13 @@ form {
     gap: 24px;
 }
 
+#photo-live {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #3498db;
+}
+
 .btn-add{
     margin: 20px 0 0 20px;
     font-family: 'Poppins', sans-serif;
@@ -187,3 +194,23 @@ form {
       background: url(zone6.png) center/cover no-repeat;
 }
 
+.experiences-section{
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 12px;
+    background: #f8f9fa;
+    border: 2px solid #444343;
+}
+
+.experiences-section label{
+    font-weight: 600;
+    color: #000;
+    margin: 0 0 12px 0;
+}
+
+#experiences-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+}
