@@ -1,4 +1,4 @@
-let employees = [];
+let employees = [{ }];
 let nextId = 1;
 let zone =[
     { id : 1, name : "reception" , allowedzone : ["reception"]},
@@ -68,8 +68,18 @@ const photoUrl = document.getElementById('photo').value.trim();
 const email = document.getElementById('email').value.trim();
 const phone = document.getElementById('phone').value.trim();
 
-addEmployee(name , role , photoUrl, email , phone , []);
+const experiences = [];
+document.querySelectorAll('.experience-item').forEach(item => {
+    const poste = item.children[0].value.trim();
+    const entreprise = item.children[1].value.trim();
+      const annees = item.children[2].value.trim();
 
+      if (poste && entreprise && annees) {
+        experiences.push({ poste, entreprise, annees });
+      }
+});
+addEmployee(name , role , photoUrl, email , phone , experiences);
+unsignedStaff();
 closeModal();
 }
 });
@@ -169,6 +179,27 @@ photoUrl.addEventListener('input', () => {
   }
 });
 
-// function addExperience() {
-//     const div = document.
-// }
+function addExperience() {
+    const div = document.createElement('div');
+    div.className = 'experience-item';
+
+    div.innerHTML=`
+    <input type="text" placeholder="Post">
+    <input type="text" placeholder="Entreprise">
+    <input type="text" placeholder="Years">
+    <button type="button" class="remove-exp">x</button>
+    `;
+
+    div.querySelector('.remove-exp').addEventListener('click', () => {
+        div.remove();
+    });
+    experiencescontainer.appendChild(div);
+}
+
+addexperiencebtn.addEventListener('click' , addExperience);
+openbtn.addEventListener('click', addExperience);
+openbtn.addEventListener('click', () => {
+    modal.style.display = 'flex';
+    experiencescontainer.innerHTML = '';
+    addExperience();
+});
