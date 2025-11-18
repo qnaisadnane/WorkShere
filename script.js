@@ -1,5 +1,11 @@
-let employees = [{ }];
 let nextId = 1;
+let employees = [{ 
+    id: nextId++, name: "Salma Alami", role: "Receptionnistes" ,photoUrl: "https://randomuser.me/api/portraits/women/68.jpg", email:"salma@worksphere.ma", phone: "0612365478", experiences :[{ poste : "Receptionnistes" , entreprise: "Hotel", annees: "2020-2024" }], zoneassigne: null
+    },{id: nextId++, name: "Youssef Benali", role: "Technicien IT" ,photoUrl: "https://randomuser.me/api/portraits/men/32.jpg", email: "youssef@worksphere.ma", phone: "0654321987", experiences: [{ poste: "Support IT", entreprise: "Orange", annees: "2019-2022" }], zoneassigne: null
+  },{id: nextId++, name: "Morad Yousfi", role: "Agent de securite", photoUrl: "https://randomuser.me/api/portraits/men/68.jpg", email: "moad@worksphere.ma", phone: "0678901234", experiences: [{ poste: "Agent de sécurité", entreprise: "OCP", annees: "2020-2024" }], zoneassigne: null
+  }  
+];
+
 let zone =[
     { id : 1, name : "reception" , allowedzone : ["reception"]},
     { id : 2, name : "salle des serveurs " , allowedzone : ["salle des serveurs"]},
@@ -99,9 +105,9 @@ if(unassigned.length === 0){
 }
 unassigned.forEach(emp => {
 const item = document.createElement('li');
-item.className = 'staff-list';
+item.className = 'staff-item';
 item.innerHTML = `
- <img src="${emp.photo}" alt="${emp.name}">
+ <img src="${emp.photoUrl}" alt="${emp.name}">
  <div>
  <strong>${emp.name}</strong>
  <span>${emp.role}</span>
@@ -111,7 +117,9 @@ item.innerHTML = `
 });
 }
 
-document.addEventListener('DOMContentLoaded' , unsignedStaff);
+document.addEventListener('DOMContentLoaded' , () => {
+    unsignedStaff();
+});
 
 function validateForm(){
     let isvalid = true;
