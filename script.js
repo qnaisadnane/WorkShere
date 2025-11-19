@@ -16,6 +16,7 @@ let zone =[
 ]
 
 const modal = document.getElementById('add-worker-modal');
+const modalworker = document.getElementById('assignmodal');
 const openbtn = document.getElementById('add-worker-btn');
 const cancelbtn = document.getElementById('btn-cancel-form');
 const form = document.getElementById('add-worker-form');
@@ -23,11 +24,14 @@ const photoUrl = document.getElementById('photo');
 const photopreview  = document.getElementById('photo-live');
 const experiencescontainer = document.getElementById('experiences-container');
 const addexperiencebtn = document.getElementById('add-experience-btn');
+const openbtnemp = document.getElementById('add-btn-emp');
+
 
 function createEmployee(name , role , photoUrl , email , phone , experiences = []) {
   return {
   id : nextId++,
   name : name,
+  role: role,
   photoUrl : photoUrl,
   email : email,
   experiences : experiences,
@@ -62,6 +66,8 @@ if(e.target === modal) closeModal;
 function closeModal(){
     modal.style.display = 'none';
     form.reset();
+    experiencescontainer.innerHTML = '';
+    photopreview.src = 'https://via.placeholder.com/150?text=Photo';
 }
 
 form.addEventListener('submit' , (e) =>{
@@ -125,7 +131,7 @@ function validateForm(){
     let isvalid = true;
     const errors = [];
 
-    const role = document.getElementById('role').value;
+    const role = document.getElementById('select-role').value;
     if(!role){
     errors.push("please select a role");
     isvalid = false;
@@ -162,7 +168,7 @@ function showerrors(errors){
 
     errors.forEach(msg => {
         const errore = document.createElement('div');
-        errore.className ='.error-message';
+        errore.className ='error-message';
         errore.style.color = '#e74c3c';
         errore.textContent = msg;
 
@@ -210,4 +216,8 @@ openbtn.addEventListener('click', () => {
     modal.style.display = 'flex';
     experiencescontainer.innerHTML = '';
     addExperience();
+});
+
+openbtnemp.addEventListener('click', () => {
+    modalworker.style.display = 'flex';
 });
