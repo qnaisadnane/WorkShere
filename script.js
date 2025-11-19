@@ -232,9 +232,31 @@ document.querySelectorAll('.add-btn').forEach(btn => {
 
         if (employees.length === 0) {
             modallist.innerHTML += '<p style="text-align:center; color:#999;">No worker available</p>';
-        } else {
+            modalworker.style.display = 'flex';
+            return;
+        } 
             employees.forEach(emp => {
+                const role = emp.role;
                 const isAssigned = emp.zoneassigne !== null;
+                let canaccess = false;
+
+                if (zoneid === 'reception') {
+                canaccess = role === 'Receptionnistes';
+            }
+            else if (zoneid === 'servers') {
+                canaccess = role === 'Techniciens IT';
+            }
+            else if (zoneid === 'security') {
+                canaccess = role === 'Agent de securite';
+            }
+            else if (zoneid === 'archives') {
+                canaccess = role !== 'Nettoyage'; 
+            }
+            else {
+                canaccess = role === 'Manager' || role !== 'Nettoyage' || zoneid !== 'archives';
+                canaccess = true; 
+            }
+                if (canaccess) {
                 const item = document.createElement('div');
                 item.className = 'worker-item';
                 item.style.cssText = `
@@ -252,10 +274,10 @@ document.querySelectorAll('.add-btn').forEach(btn => {
                     </div>
                 `;
                 modallist.appendChild(item);
+                }
             });
-        }
+        
 
-        // Afficher le modal
         modalworker.style.display = 'flex';
     });
 });
