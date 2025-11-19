@@ -16,7 +16,6 @@ let zone =[
 ]
 
 const modal = document.getElementById('add-worker-modal');
-const modalworker = document.getElementById('assignmodal');
 const openbtn = document.getElementById('add-worker-btn');
 const cancelbtn = document.getElementById('btn-cancel-form');
 const form = document.getElementById('add-worker-form');
@@ -25,7 +24,8 @@ const photopreview  = document.getElementById('photo-live');
 const experiencescontainer = document.getElementById('experiences-container');
 const addexperiencebtn = document.getElementById('add-experience-btn');
 const openbtnemp = document.getElementById('add-btn-emp');
-
+const modalworker = document.getElementById('assignmodal');
+const modallist = document.getElementById('modallist');
 
 function createEmployee(name , role , photoUrl , email , phone , experiences = []) {
   return {
@@ -218,6 +218,46 @@ openbtn.addEventListener('click', () => {
     addExperience();
 });
 
-openbtnemp.addEventListener('click', () => {
-    modalworker.style.display = 'flex';
+modalworker.addEventListener('click', (e) => {
+    if (e.target === modalworker) {
+        modalworker.style.display = 'none';
+    }
 });
+
+document.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const zoneelement = btn.closest('.zone');
+        const zoneid = zoneelement.id;
+        modallist.innerHTML = '';
+
+        if (employees.length === 0) {
+            modallist.innerHTML += '<p style="text-align:center; color:#999;">No worker available</p>';
+        } else {
+            employees.forEach(emp => {
+                const isAssigned = emp.zoneassigne !== null;
+                const item = document.createElement('div');
+                item.className = 'worker-item';
+                item.style.cssText = `
+                    display:flex; align-items:center; gap:12px; 
+                    padding:10px; border-bottom:1px solid #eee; 
+                    background: ${isAssigned ? '#f0f0f0' : '#fff'}
+                `;
+
+                item.innerHTML = `
+                    <img src="${emp.photoUrl}" alt="${emp.name}" style="width:50px; height:50px; border-radius:50%; object-fit:cover;">
+                    <div style="flex:1;">
+                        <strong>${emp.name}</strong><br>
+                        <small>${emp.role}</small>
+                        
+                    </div>
+                `;
+                modallist.appendChild(item);
+            });
+        }
+
+        // Afficher le modal
+        modalworker.style.display = 'flex';
+    });
+});
+
+                
