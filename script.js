@@ -105,7 +105,7 @@ const unassigned = employees.filter(emp => emp.zoneassigne === null);
 if(unassigned.length === 0){
     list.innerHTML = `
           <li class="empty-message">
-          Aucun employe non assigne
+          No unassigned employees
           </li> `;
           return;
 }
@@ -198,10 +198,11 @@ function addExperience() {
     div.className = 'experience-item';
 
     div.innerHTML=`
-    <input type="text" placeholder="Post">
-    <input type="text" placeholder="Entreprise">
-    <input type="text" placeholder="Years">
-    <button type="button" class="remove-exp">x</button>
+    <input type="text" class="experience-post" placeholder="Post">
+    <input type="text" class="experience-entreprise" placeholder="Entreprise">
+    <input type="date" class="experience-years" placeholder="Years">
+    <input type="date" class="experience-years" placeholder="Years">
+    <button type="button" class="remove-exp">Close experience</button>
     `;
 
     div.querySelector('.remove-exp').addEventListener('click', () => {
@@ -224,6 +225,25 @@ modalworker.addEventListener('click', (e) => {
     }
 });
 
+function renderzoneemployees() {
+    document.querySelectorAll('.zone').forEach(zone => {
+        const employeesdiv = zone.querySelector('.employees');
+        employeesdiv.innerHTML = ''; 
+
+        employees.forEach(emp => {
+            if (emp.zoneassigne === zone.id) {
+                const empdiv = document.createElement('div');
+                empdiv.className = 'assigned-employee';
+                empdiv.innerHTML = `
+                    <img src="${emp.photoUrl}" alt="${emp.name}">
+                    <span>${emp.name}</span>
+                `;
+                employeesdiv.appendChild(empdiv);
+            }
+        });
+    });
+}
+
 document.querySelectorAll('.add-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const zoneelement = btn.closest('.zone');
@@ -237,7 +257,7 @@ document.querySelectorAll('.add-btn').forEach(btn => {
         } 
             employees.forEach(emp => {
                 const role = emp.role;
-                const isAssigned = emp.zoneassigne !== null;
+                const isassigned = emp.zoneassigne !== null;
                 let canaccess = false;
 
                 if (zoneid === 'reception') {
@@ -262,7 +282,7 @@ document.querySelectorAll('.add-btn').forEach(btn => {
                 item.style.cssText = `
                     display:flex; align-items:center; gap:12px; 
                     padding:10px; border-bottom:1px solid #eee; 
-                    background: ${isAssigned ? '#f0f0f0' : '#fff'}
+                    background: ${isassigned ? '#f0f0f0' : '#fff'}
                 `;
 
                 item.innerHTML = `
@@ -273,6 +293,14 @@ document.querySelectorAll('.add-btn').forEach(btn => {
                         
                     </div>
                 `;
+
+                 item.addEventListener('click', () => {
+                    emp.zoneassigne = zoneid;        
+                    modalworker.style.display = 'none'; 
+                    renderzoneemployees();           
+                    unsignedStaff();                 
+                });
+
                 modallist.appendChild(item);
                 }
             });
