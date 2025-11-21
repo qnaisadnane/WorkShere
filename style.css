@@ -4,8 +4,16 @@
     box-sizing: border-box;
     overflow-x: hidden;
 }
-.barlow-semi-condensed-thin {
-  font-family: "Barlow Semi Condensed", sans-serif;
+.plus-jakarta-sans-semibold {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.poppins-semibold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
   font-style: normal;
 }
 
@@ -19,17 +27,26 @@
     display: grid;
     grid-template-columns: 340px 1fr;
     margin: 0 25px;
-    height: 100%;                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+    height: 100%; 
+    gap: 25px;                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+}
+
+.sidebar-staff {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .sidebar-staff h2{
     text-align: center;
     font-size: 30px;
-    font-weight: bold;
+    font-weight: 800;
+    margin: 2rem 0 0 0;
 }
 
 .add-worker{
-    margin: 10px 0 0 0;
+    padding: 13px 25px;
+    margin: 10px 0 20px 0;
     background-color: rgb(5, 216, 5);
     color: #fff;
     font-family: "Barlow Semi Condensed", sans-serif;
@@ -37,20 +54,13 @@
     font-weight: 800;
     border: none;
     border-radius: 20px;
-    width: 150px;
-    height: 35px;
 }
 
-.modal{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #ffffffab;
-    padding: 20px;
-    overflow-y: auto;
+.fromt{
+    margin: 5px 0 0 0;
 }
+
+
 
 .modal-content{
     padding: 20px;
@@ -83,7 +93,7 @@
 .experience-years{
   width: 100%;
   padding: 8px;
-  margin-top: 5px;
+  margin: 15px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
@@ -149,11 +159,18 @@ form {
     border-radius: 1rem;
     font-size: 18px;
     padding: 15px 15px;
-    margin: 10px 0 0 0; 
+    margin: 10px 0 0 0;
 }
 
+.remove-exp-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
 .staff-item{
-    background: #81a7d6;
+    background: #c8d1dd;
     border-radius: 12px;
     padding: 12px;
     margin: 0 0 12px 0;
@@ -172,6 +189,12 @@ form {
 .worksphere-div{
     height: 100vh;
 }
+.worksphere-div h1{
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+    margin: 2rem 0 0 0;
+}
 
 .zone-grid{
     display: grid;
@@ -180,6 +203,42 @@ form {
 }
 .zone{
     border: 5px solid #000;
+    
+}
+
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffffab;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.add-btn {
+    width: 50px;
+    border: none;
+    height: 50px;
+    border-radius: 1rem;
+    background: #3498db;
+    color: white;
+    font-size: 40px;
+    
+}
+
+.error-msg {
+    color: #e74c3c;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 18px;
+    margin-bottom: 4px;
+    display: none;               
+}
+
+.error-msg.show {
+    display: block;              
 }
 
 #reception{
@@ -224,7 +283,11 @@ form {
     border-radius: 12px;
     background: #f8f9fa;
     border: 2px solid #444343;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
 
 .experiences-section label{
     font-weight: 600;
@@ -239,14 +302,7 @@ form {
     margin-bottom: 12px;
 }
 
-.add-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #3498db;
-    color: white;
-    font-size: 20px;    
-}
+
 
 .worker-modal{
     position: fixed;
@@ -286,4 +342,18 @@ form {
     font-size: 13px;
     font-weight: 600;
     color: #2c3e50;
+}
+
+.error{
+    color: red;
+}
+
+@media screen and (min-width: 1024pxpx) and (max-width: 1279px) {
+    .global-div {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      margin: 0 25px;
+      height: 100%;
+      gap: 25px;
+}
 }

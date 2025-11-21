@@ -40,10 +40,10 @@ function createEmployee(name , role , photoUrl , email , phone , experiences = [
 }
 
 function addEmployee(name , role , photoUrl, email , phone , experiences){
-const newEmployee = createEmployee(name , role , photoUrl, email , phone , experiences);
-employees.push(newEmployee);
-console.log("employe ajoute :" , newEmployee);
-return newEmployee;
+    const newEmployee = createEmployee(name , role , photoUrl, email , phone , experiences);
+    employees.push(newEmployee);
+    console.log("employe ajoute :" , newEmployee);
+    return newEmployee;
 }
 
 function removeEmployee(id){
@@ -54,13 +54,15 @@ function removeEmployee(id){
 
 openbtn.addEventListener('click', () => {
     modal.style.display = 'flex';
+    const olderrors = document.querySelectorAll('.error');
+    olderrors.forEach(e => e.innerHTML = "");
 });
 
 
 cancelbtn.addEventListener('click' , closeModal);
 
 window.addEventListener('click' ,(e) => {
-if(e.target === modal) closeModal;
+    if(e.target === modal) closeModal;
 });
 
 function closeModal(){
@@ -72,27 +74,26 @@ function closeModal(){
 
 form.addEventListener('submit' , (e) =>{
 e.preventDefault();
-
 if( validateForm()){
-const name = document.getElementById('name').value.trim();
-const role = document.getElementById('select-role').value;
-const photoUrl = document.getElementById('photo').value.trim();
-const email = document.getElementById('email').value.trim();
-const phone = document.getElementById('phone').value.trim();
+    const name = document.getElementById('name').value.trim();
+    const role = document.getElementById('select-role').value;
+    const photoUrl = document.getElementById('photo').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
 
-const experiences = [];
-document.querySelectorAll('.experience-item').forEach(item => {
-    const poste = item.children[0].value.trim();
-    const entreprise = item.children[1].value.trim();
-      const annees = item.children[2].value.trim();
+    const experiences = [];
+    document.querySelectorAll('.experience-item').forEach(item => {
+        const poste = item.children[0].value.trim();
+        const entreprise = item.children[1].value.trim();
+        const annees = item.children[2].value.trim();
 
-      if (poste && entreprise && annees) {
-        experiences.push({ poste, entreprise, annees });
-      }
-});
-addEmployee(name , role , photoUrl, email , phone , experiences);
-unsignedStaff();
-closeModal();
+        if (poste && entreprise && annees) {
+            experiences.push({ poste, entreprise, annees });
+        }
+    });
+    addEmployee(name , role , photoUrl, email , phone , experiences);
+    unsignedStaff();
+    closeModal();
 }
 });
 
@@ -128,51 +129,66 @@ document.addEventListener('DOMContentLoaded' , () => {
 });
 
 function validateForm(){
+    
     let isvalid = true;
     const errors = [];
 
-    const role = document.getElementById('select-role').value;
-    if(!role){
-    errors.push("please select a role");
+    const name = document.getElementById('name');
+    const nameRegex = /^[A-Za-z]{3,}$/;
+    if(!name.value){
+        name.nextElementSibling.innerHTML = "please select a name";
     isvalid = false;
+    }  else if(!nameRegex.test(name)){
+        name.nextElementSibling.innerHTML = "name doit contenir au moins 3 lettres";
+        isvalid = false;
     }
 
-    const email = document.getElementById('email').value;
+    const role = document.getElementById('select-role');
+    if(!role.value){
+        role.nextElementSibling.innerHTML = "please select a role";
+     isvalid = false;
+     }
+
+    const email = document.getElementById('email');
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(!email){
-    errors.push("please select a email");
-    isvalid = false;
-    }  else if(!emailRegex.test(email)){
-        errors.push("enter a valide email like this (example@gmail.com)");
-        isvalid = false;
-    }
+    if(!email.value){
+        email.nextElementSibling.innerHTML = "please select email";
+      isvalid = false;
+     }  else if(!emailRegex.test(email)){
+    email.nextElementSibling.innerHTML = "email must have @ and .";
+       isvalid = false;
+     }
 
-    const phone = document.getElementById('phone').value;
+    const phone = document.getElementById('phone');
     const phoneRegex = /^\d{10}$/;
-    if(!phone){
-    errors.push("please select a email");
-    isvalid = false;
-    }  else if(!phoneRegex.test(phone)){
-        errors.push("enter a valide phone number ");
+    if(!phone.value){
+    phone.nextElementSibling.innerHTML = "please select phone";
+      isvalid = false;
+     }  else if(!phoneRegex.test(phone)){
+    phone.nextElementSibling.innerHTML = "phone must have 10 numbers and begin 06 or 07";
         isvalid = false;
-    }
+     }
 
-    showerrors(errors);
+    const photoUrl = document.getElementById('photo');
+    if(!photoUrl.value){
+    photoUrl.nextElementSibling.innerHTML = "please select photo";
+      isvalid = false;
+     } 
+
     return isvalid;
 
 }
 
+
 function showerrors(errors){
-    const olderrors = document.querySelectorAll('.error-message');
-    olderrors.forEach(e => e.remove());
+    const errore = document.createElement('div');
+    const formActions = document.querySelector('.form-actions');
 
     errors.forEach(msg => {
-        const errore = document.createElement('div');
-        errore.className ='error-message';
+        errore.className ='error';
         errore.style.color = '#e74c3c';
         errore.textContent = msg;
 
-        const formActions = document.querySelector('.form-actions');
         formActions.before(errore);
     });
 }
@@ -200,9 +216,13 @@ function addExperience() {
     div.innerHTML=`
     <input type="text" class="experience-post" placeholder="Post">
     <input type="text" class="experience-entreprise" placeholder="Entreprise">
+    <p class="fromt">From</p>
     <input type="date" class="experience-years" placeholder="Years">
+    <p class="fromt">To</p>
     <input type="date" class="experience-years" placeholder="Years">
-    <button type="button" class="remove-exp">Close experience</button>
+    <div class="remove-exp-div">
+    <button type="button" class="remove-exp">Close Experience</button>
+    </div>
     `;
 
     div.querySelector('.remove-exp').addEventListener('click', () => {
