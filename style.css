@@ -331,12 +331,10 @@ form {
     margin-bottom: 12px;
 }
 
-
-
-
 .assigned-employee {
-    text-align: center;
-    margin: 8px 0;
+    background-color: #ccc;
+    display: flex;
+    flex-direction: row;
 }
 .assigned-employee img {
     width: 50px;
@@ -369,8 +367,10 @@ form {
     display: none;
     position: fixed;
     z-index: 1000;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
+    left: 0; 
+    top: 0;
+    width: 100%; 
+    height: 100%;
     background-color: rgba(0,0,0,0.6);
     overflow: auto;
 }
@@ -386,26 +386,36 @@ form {
     position: relative;
 }
 .worker-modal{
+    display: none;
     position: fixed;
+    z-index: 1000;
+    left: 0; 
     top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #ffffffab;
-    padding: 20px;
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
     overflow-y: auto;
-    
 }
 
 .modallist-worker{
-    padding: 20px;
-    background: white;
-    max-width: 500px;
-    border-radius: 10px;
-    margin: 40px auto;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    /* background-color: rgb(232, 223, 223);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    width: 90%;                        
+    box-sizing: border-box; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
     overflow-y: auto;
-    border: none;
+    min-width: 25rem;
+    border-radius: 12px;
+
+    
+    
 }
 .cv-header {
     display: flex;
@@ -433,6 +443,10 @@ form {
    display: flex;
    flex-direction: column;
    gap: 10px;
+}
+
+.post{
+    margin: 0 0 20px 0;
 }
 
 @media screen and (min-width: 1024pxpx) and (max-width: 1279px) {

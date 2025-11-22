@@ -123,21 +123,23 @@ function closeModal() {
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (validateForm() && validateExperience()) {
+        
         const name = document.getElementById('name').value.trim();
         const role = document.getElementById('select-role').value;
-        const photoUrl = document.getElementById('photo').value.trim();
+        const photoUrl = document.getElementById('photo').value.trim() || "https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small/profile-icon-design-free-vector.jpg";
         const email = document.getElementById('email').value.trim();
         const phone = document.getElementById('phone').value.trim();
 
         const experiences = [];
         document.querySelectorAll('.experience-item').forEach(item => {
-            const poste = item.children[0].value.trim();
-            const entreprise = item.children[1].value.trim();
-            const annees = item.children[2].value.trim();
+            const poste = item.querySelector('.post').value.trim();
+            const entreprise = item.querySelector('.entreprise').value.trim();
+            const debut = item.querySelector('.date-debut').value;
+            const fin = item.querySelector('.date-fin').value;
 
-            if (poste && entreprise && annees) {
-                experiences.push({ poste, entreprise, annees });
+            if (poste && entreprise && debut && fin) {
+                experiences.push({ poste, entreprise, annees: `${debut}- ${fin}` });
             }
         });
         addEmployee(name, role, photoUrl, email, phone, experiences);
@@ -170,19 +172,11 @@ function unsignedStaff() {
  <span>${emp.role}</span>
  </div>
  <div class="remove-display">
- <button class="remove-btn">Remove</button>
  <button class="display-btn">Display</button>
  </div>
 
  `;
 
-        item.querySelector('.remove-btn').addEventListener('click', function () {
-            const confirmation = confirm('Do you want to delete this worker ?');
-            if (confirmation) {
-                removeEmployee(emp.id);
-                item.remove();
-            }
-        });
 
         item.querySelector('.display-btn').addEventListener('click', function () {
             displayEmployee(emp);
@@ -240,32 +234,57 @@ function validateForm() {
         isvalid = false;
     }
 
-    const photoUrl = document.getElementById('photo');
-    if (!photoUrl.value) {
-        photoUrl.nextElementSibling.innerHTML = "please select photo";
-        isvalid = false;
-    }
-
-
-
     return isvalid;
 
 }
 
-// function validateExperience(){
-//      let isval = true;
-//      const post = document.getElementById('post');
-//      const postRegex = /^[A-Za-z]{3,}$/;
-//      if(!post.value){
-//         post.nextElementSibling.innerHTML = "please select a post";
-//         isvalid = false;
-//     }  else if(!nameRegex.test(name.value)){
-//         name.nextElementSibling.innerHTML = "name doit contenir au moins 3 lettres";
-//         isvalid = false;
-//     } else {
-//         name.nextElementSibling.innerHTML =  '';
-//     }
-//      }
+function validateExperience() {
+    let isValid = true;
+
+    const lastExp = document.querySelector('.experience-item:last-child');
+    if (!lastExp) return true;
+
+    const post = lastExp.querySelector('.post');
+    const entreprise = lastExp.querySelector('.entreprise');
+    const debut = lastExp.querySelector('.date-debut');
+    const fin = lastExp.querySelector('.date-fin');
+
+    lastExp.querySelectorAll('.error').forEach(e => e.innerHTML = '');
+    const textRegex = /^[A-Za-z]{3,}$/;
+
+    if (!textRegex.test(post.value)) {
+        post.nextElementSibling.innerHTML = "post doit contenir au moins 3 lettres";
+        isValid = false;
+    }
+
+    if (!textRegex.test(entreprise.value)) {
+        entreprise.nextElementSibling.innerHTML = "entreprise doit contenir au moins 3 lettres";
+        isValid = false;
+    }
+
+    const d1 = new Date(debut.value);
+    const d2 = new Date(fin.value);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    if (d1 >= today) {
+        debut.nextElementSibling.innerHTML = "start date must be before today";
+        isValid = false;
+    }
+
+    if (d2 >= today) {
+        fin.nextElementSibling.innerHTML = "end date must be before today";
+        isValid = false;
+    }
+
+    if (d1 >= d2) {
+        debut.nextElementSibling.innerHTML = "start date must be before end date";
+        isValid = false;
+    }
+
+    return isValid;
+}
+
 
 
 function showerrors(errors) {
@@ -303,11 +322,15 @@ function addExperience() {
 
     div.innerHTML = `
     <input type="text" class="post" placeholder="Post">
+    <div class="error"></div>
     <input type="text" class="entreprise" placeholder="Entreprise">
+    <div class="error"></div>
     <p class="fromt">From</p>
-    <input type="date" class="experience-years" placeholder="Years">
+    <input type="date" class="date-debut" placeholder="Years">
+    <div class="error"></div>
     <p class="fromt">To</p>
-    <input type="date" class="experience-years" placeholder="Years">
+    <input type="date" class="date-fin" placeholder="Years">
+    <div class="error"></div>
     <div class="remove-exp-div">
     <button type="button" class="remove-exp">Close Experience</button>
     </div>
@@ -344,7 +367,10 @@ function renderzoneemployees() {
                 empdiv.className = 'assigned-employee';
                 empdiv.innerHTML = `
                     <img src="${emp.photoUrl}" alt="${emp.name}">
-                    <span>${emp.name}</span>
+                    <div style="flex:1;">
+                        <strong>${emp.name}</strong><br>
+                        <small>${emp.role}</small> 
+                    </div>
                 `;
                 employeesdiv.appendChild(empdiv);
             }
@@ -397,8 +423,7 @@ document.querySelectorAll('.add-btn').forEach(btn => {
                     <img src="${emp.photoUrl}" alt="${emp.name}" style="width:50px; height:50px; border-radius:50%;">
                     <div style="flex:1;">
                         <strong>${emp.name}</strong><br>
-                        <small>${emp.role}</small>
-                        
+                        <small>${emp.role}</small> 
                     </div>
                 `;
 
