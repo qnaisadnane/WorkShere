@@ -1,18 +1,20 @@
 let nextId = 1;
-let employees = [{ 
-    id: nextId++, name: "Salma Alami", role: "Receptionnistes" ,photoUrl: "https://randomuser.me/api/portraits/women/68.jpg", email:"salma@worksphere.ma", phone: "0612365478", experiences :[{ poste : "Receptionnistes" , entreprise: "Hotel", annees: "2020-2024" }], zoneassigne: null
-    },{id: nextId++, name: "Youssef Benali", role: "Technicien IT" ,photoUrl: "https://randomuser.me/api/portraits/men/32.jpg", email: "youssef@worksphere.ma", phone: "0654321987", experiences: [{ poste: "Support IT", entreprise: "Orange", annees: "2019-2022" }], zoneassigne: null
-  },{id: nextId++, name: "Morad Yousfi", role: "Agent de securite", photoUrl: "https://randomuser.me/api/portraits/men/68.jpg", email: "moad@worksphere.ma", phone: "0678901234", experiences: [{ poste: "Agent de sécurité", entreprise: "OCP", annees: "2020-2024" }], zoneassigne: null
-  }  
+let employees = [{
+    id: nextId++, name: "Salma Alami", role: "Receptionnistes", photoUrl: "https://randomuser.me/api/portraits/women/68.jpg", email: "salma@worksphere.ma", phone: "0612365478", experiences: [{ poste: "Receptionnistes", entreprise: "Hotel", annees: "2020-2024" }], zoneassigne: null
+}, {
+    id: nextId++, name: "Youssef Benali", role: "Technicien IT", photoUrl: "https://randomuser.me/api/portraits/men/32.jpg", email: "youssef@worksphere.ma", phone: "0654321987", experiences: [{ poste: "Support IT", entreprise: "Orange", annees: "2019-2022" }], zoneassigne: null
+}, {
+    id: nextId++, name: "Morad Yousfi", role: "Agent de securite", photoUrl: "https://randomuser.me/api/portraits/men/68.jpg", email: "moad@worksphere.ma", phone: "0678901234", experiences: [{ poste: "Agent de sécurité", entreprise: "OCP", annees: "2020-2024" }], zoneassigne: null
+}
 ];
 
-let zone =[
-    { id : 1, name : "reception" , allowedzone : ["reception"]},
-    { id : 2, name : "salle des serveurs " , allowedzone : ["salle des serveurs"]},
-    { id : 3, name : "salle de securite" , allowedzone : ["salle de securite"]},
-    { id : 4, name : "salle archivs" , allowedzone : ["salle archivs"]},
-    { id : 5, name : "salle conference" , allowedzone : ["salle conference"]},
-    { id : 6, name : "salle personel" , allowedzone : ["salle personel"]},
+let zone = [
+    { id: 1, name: "reception", allowedzone: ["reception"] },
+    { id: 2, name: "salle des serveurs ", allowedzone: ["salle des serveurs"] },
+    { id: 3, name: "salle de securite", allowedzone: ["salle de securite"] },
+    { id: 4, name: "salle archivs", allowedzone: ["salle archivs"] },
+    { id: 5, name: "salle conference", allowedzone: ["salle conference"] },
+    { id: 6, name: "salle personel", allowedzone: ["salle personel"] },
 ]
 
 const modal = document.getElementById('add-worker-modal');
@@ -20,35 +22,82 @@ const openbtn = document.getElementById('add-worker-btn');
 const cancelbtn = document.getElementById('btn-cancel-form');
 const form = document.getElementById('add-worker-form');
 const photoUrl = document.getElementById('photo');
-const photopreview  = document.getElementById('photo-live');
+const photopreview = document.getElementById('photo-live');
 const experiencescontainer = document.getElementById('experiences-container');
 const addexperiencebtn = document.getElementById('add-experience-btn');
 const openbtnemp = document.getElementById('add-btn-emp');
 const modalworker = document.getElementById('assignmodal');
 const modallist = document.getElementById('modallist');
 
-function createEmployee(name , role , photoUrl , email , phone , experiences = []) {
-  return {
-  id : nextId++,
-  name : name,
-  role: role,
-  photoUrl : photoUrl,
-  email : email,
-  experiences : experiences,
-  zoneassigne : null
-  };
+function createEmployee(name, role, photoUrl, email, phone, experiences = []) {
+    return {
+        id: nextId++,
+        name: name,
+        role: role,
+        photoUrl: photoUrl,
+        email: email,
+        experiences: experiences,
+        zoneassigne: null
+    };
 }
 
-function addEmployee(name , role , photoUrl, email , phone , experiences){
-    const newEmployee = createEmployee(name , role , photoUrl, email , phone , experiences);
+function addEmployee(name, role, photoUrl, email, phone, experiences) {
+    const newEmployee = createEmployee(name, role, photoUrl, email, phone, experiences);
     employees.push(newEmployee);
-    console.log("employe ajoute :" , newEmployee);
+    console.log("employe ajoute :", newEmployee);
     return newEmployee;
 }
 
-function removeEmployee(id){
+function removeEmployee(id) {
     employees = employees.filter(emp => emp.id !== id);
-    console.log("employe supprime, id :" , id);
+    console.log("employe supprime, id :", id);
+}
+
+function displayEmployee(emp) {
+    const modal = document.getElementById('cvModal');
+    const content = document.getElementById('cvContent');
+
+    let experiencesHTML = '';
+    if (emp.experiences && emp.experiences.length > 0) {
+        experiencesHTML = emp.experiences.map(exp => `
+            <div class="experience-item">
+                <strong>${exp.post || 'Poste not specified'}</strong><br>
+                <em>${exp.entreprise || 'Entreprise not specified'}</em><br>
+                <small>FROM ${exp.from || '?'} TO ${exp.to}</small>
+            </div>
+        `).join('');
+    } else {
+        experiencesHTML = '<p>No experience reported.</p>';
+    }
+
+    content.innerHTML = `
+        <div class="cv-header">
+            <img src="${emp.photoUrl}">
+             <div class="cv-header-title">
+            <h2>${emp.name}</h2>
+            <h3>${emp.role}</h3>
+            </div>
+        </div>
+
+        <hr>
+       <div class="cv-center">
+        <h3>Personal Informations</h3>
+        <p><strong>Email :</strong> ${emp.email}</p>
+        <p><strong>Phone :</strong> ${emp.phone}</p>
+         </div>
+        <hr>
+
+        <h3>Professional Experiences</h3>
+        
+
+        
+    `;
+
+    modal.style.display = 'block';
+
+    window.onclick = (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+    };
 }
 
 
@@ -59,133 +108,172 @@ openbtn.addEventListener('click', () => {
 });
 
 
-cancelbtn.addEventListener('click' , closeModal);
+cancelbtn.addEventListener('click', closeModal);
 
-window.addEventListener('click' ,(e) => {
-    if(e.target === modal) closeModal;
+window.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
 });
 
-function closeModal(){
+function closeModal() {
     modal.style.display = 'none';
     form.reset();
     experiencescontainer.innerHTML = '';
     photopreview.src = 'https://via.placeholder.com/150?text=Photo';
 }
 
-form.addEventListener('submit' , (e) =>{
-e.preventDefault();
-if( validateForm()){
-    const name = document.getElementById('name').value.trim();
-    const role = document.getElementById('select-role').value;
-    const photoUrl = document.getElementById('photo').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+        const name = document.getElementById('name').value.trim();
+        const role = document.getElementById('select-role').value;
+        const photoUrl = document.getElementById('photo').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
 
-    const experiences = [];
-    document.querySelectorAll('.experience-item').forEach(item => {
-        const poste = item.children[0].value.trim();
-        const entreprise = item.children[1].value.trim();
-        const annees = item.children[2].value.trim();
+        const experiences = [];
+        document.querySelectorAll('.experience-item').forEach(item => {
+            const poste = item.children[0].value.trim();
+            const entreprise = item.children[1].value.trim();
+            const annees = item.children[2].value.trim();
 
-        if (poste && entreprise && annees) {
-            experiences.push({ poste, entreprise, annees });
-        }
-    });
-    addEmployee(name , role , photoUrl, email , phone , experiences);
-    unsignedStaff();
-    closeModal();
-}
+            if (poste && entreprise && annees) {
+                experiences.push({ poste, entreprise, annees });
+            }
+        });
+        addEmployee(name, role, photoUrl, email, phone, experiences);
+        unsignedStaff();
+        closeModal();
+    }
 });
 
 
 function unsignedStaff() {
-const list = document.getElementById('unassigned-list');
-list.innerHTML= '';
-const unassigned = employees.filter(emp => emp.zoneassigne === null);
+    const list = document.getElementById('unassigned-list');
+    list.innerHTML = '';
+    const unassigned = employees.filter(emp => emp.zoneassigne === null);
 
-if(unassigned.length === 0){
-    list.innerHTML = `
+    if (unassigned.length === 0) {
+        list.innerHTML = `
           <li class="empty-message">
           No unassigned employees
           </li> `;
-          return;
-}
-unassigned.forEach(emp => {
-const item = document.createElement('li');
-item.className = 'staff-item';
-item.innerHTML = `
+        return;
+    }
+    unassigned.forEach(emp => {
+        const item = document.createElement('li');
+        item.className = 'staff-item';
+        item.innerHTML = `
+
  <img src="${emp.photoUrl}" alt="${emp.name}">
- <div>
+ <div class="name-role">
  <strong>${emp.name}</strong>
  <span>${emp.role}</span>
  </div>
+ <div class="remove-display">
+ <button class="remove-btn">Remove</button>
+ <button class="display-btn">Display</button>
+ </div>
+
  `;
- list.appendChild(item);
-});
+
+        item.querySelector('.remove-btn').addEventListener('click', function () {
+            const confirmation = confirm('Do you want to delete this worker ?');
+            if (confirmation) {
+                removeEmployee(emp.id);
+                item.remove();
+            }
+        });
+
+        item.querySelector('.display-btn').addEventListener('click', function () {
+            displayEmployee(emp);
+        });
+
+        list.appendChild(item);
+    });
 }
 
-document.addEventListener('DOMContentLoaded' , () => {
+document.addEventListener('DOMContentLoaded', () => {
     unsignedStaff();
 });
 
-function validateForm(){
-    
+function validateForm() {
     let isvalid = true;
     const errors = [];
 
     const name = document.getElementById('name');
     const nameRegex = /^[A-Za-z]{3,}$/;
-    if(!name.value){
+    if (!name.value) {
         name.nextElementSibling.innerHTML = "please select a name";
-    isvalid = false;
-    }  else if(!nameRegex.test(name)){
+        isvalid = false;
+    } else if (!nameRegex.test(name.value)) {
         name.nextElementSibling.innerHTML = "name doit contenir au moins 3 lettres";
         isvalid = false;
+    } else {
+        console.log("condition entered");
+
+        name.nextElementSibling.innerHTML = '';
     }
 
     const role = document.getElementById('select-role');
-    if(!role.value){
+    if (!role.value) {
         role.nextElementSibling.innerHTML = "please select a role";
-     isvalid = false;
-     }
+        isvalid = false;
+    }
 
     const email = document.getElementById('email');
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(!email.value){
+    if (!email.value) {
         email.nextElementSibling.innerHTML = "please select email";
-      isvalid = false;
-     }  else if(!emailRegex.test(email)){
-    email.nextElementSibling.innerHTML = "email must have @ and .";
-       isvalid = false;
-     }
+        isvalid = false;
+    } else if (!emailRegex.test(email.value)) {
+        email.nextElementSibling.innerHTML = "email must have @ and .";
+        isvalid = false;
+    }
 
     const phone = document.getElementById('phone');
     const phoneRegex = /^\d{10}$/;
-    if(!phone.value){
-    phone.nextElementSibling.innerHTML = "please select phone";
-      isvalid = false;
-     }  else if(!phoneRegex.test(phone)){
-    phone.nextElementSibling.innerHTML = "phone must have 10 numbers and begin 06 or 07";
+    if (!phone.value) {
+        phone.nextElementSibling.innerHTML = "please select phone";
         isvalid = false;
-     }
+    } else if (!phoneRegex.test(phone.value)) {
+        phone.nextElementSibling.innerHTML = "phone must have 10 numbers and begin 06 or 07";
+        isvalid = false;
+    }
 
     const photoUrl = document.getElementById('photo');
-    if(!photoUrl.value){
-    photoUrl.nextElementSibling.innerHTML = "please select photo";
-      isvalid = false;
-     } 
+    if (!photoUrl.value) {
+        photoUrl.nextElementSibling.innerHTML = "please select photo";
+        isvalid = false;
+    }
+
+
 
     return isvalid;
 
 }
 
+// function validateExperience(){
+//      let isval = true;
+//      const post = document.getElementById('post');
+//      const postRegex = /^[A-Za-z]{3,}$/;
+//      if(!post.value){
+//         post.nextElementSibling.innerHTML = "please select a post";
+//         isvalid = false;
+//     }  else if(!nameRegex.test(name.value)){
+//         name.nextElementSibling.innerHTML = "name doit contenir au moins 3 lettres";
+//         isvalid = false;
+//     } else {
+//         name.nextElementSibling.innerHTML =  '';
+//     }
+//      }
 
-function showerrors(errors){
+
+function showerrors(errors) {
     const errore = document.createElement('div');
     const formActions = document.querySelector('.form-actions');
 
     errors.forEach(msg => {
-        errore.className ='error';
+        errore.className = 'error';
         errore.style.color = '#e74c3c';
         errore.textContent = msg;
 
@@ -193,29 +281,29 @@ function showerrors(errors){
     });
 }
 
-function getzonebyId(id){
-   return zone.find (z => z.id === id);
+function getzonebyId(id) {
+    return zone.find(z => z.id === id);
 }
 
 photoUrl.addEventListener('input', () => {
-  const url = photoUrl.value.trim();
-  if (url && url.startsWith('http')) {
-    photopreview.src = url;
-    photopreview.onerror = () => {
-      photopreview.src = 'https://via.placeholder.com/150?text=Invalid';
-    };
-  } else {
-    photopreview.src = 'https://via.placeholder.com/150?text=Photo';
-  }
+    const url = photoUrl.value.trim();
+    if (url && url.startsWith('http')) {
+        photopreview.src = url;
+        photopreview.onerror = () => {
+            photopreview.src = 'https://via.placeholder.com/150?text=Invalid';
+        };
+    } else {
+        photopreview.src = 'https://via.placeholder.com/150?text=Photo';
+    }
 });
 
 function addExperience() {
     const div = document.createElement('div');
     div.className = 'experience-item';
 
-    div.innerHTML=`
-    <input type="text" class="experience-post" placeholder="Post">
-    <input type="text" class="experience-entreprise" placeholder="Entreprise">
+    div.innerHTML = `
+    <input type="text" class="post" placeholder="Post">
+    <input type="text" class="entreprise" placeholder="Entreprise">
     <p class="fromt">From</p>
     <input type="date" class="experience-years" placeholder="Years">
     <p class="fromt">To</p>
@@ -231,7 +319,7 @@ function addExperience() {
     experiencescontainer.appendChild(div);
 }
 
-addexperiencebtn.addEventListener('click' , addExperience);
+addexperiencebtn.addEventListener('click', addExperience);
 openbtn.addEventListener('click', addExperience);
 openbtn.addEventListener('click', () => {
     modal.style.display = 'flex';
@@ -248,7 +336,7 @@ modalworker.addEventListener('click', (e) => {
 function renderzoneemployees() {
     document.querySelectorAll('.zone').forEach(zone => {
         const employeesdiv = zone.querySelector('.employees');
-        employeesdiv.innerHTML = ''; 
+        employeesdiv.innerHTML = '';
 
         employees.forEach(emp => {
             if (emp.zoneassigne === zone.id) {
@@ -274,13 +362,13 @@ document.querySelectorAll('.add-btn').forEach(btn => {
             modallist.innerHTML += '<p style="text-align:center; color:#999;">No worker available</p>';
             modalworker.style.display = 'flex';
             return;
-        } 
-            employees.forEach(emp => {
-                const role = emp.role;
-                const isassigned = emp.zoneassigne !== null;
-                let canaccess = false;
+        }
+        employees.forEach(emp => {
+            const role = emp.role;
+            const isassigned = emp.zoneassigne !== null;
+            let canaccess = false;
 
-                if (zoneid === 'reception') {
+            if (zoneid === 'reception') {
                 canaccess = role === 'Receptionnistes';
             }
             else if (zoneid === 'servers') {
@@ -290,13 +378,13 @@ document.querySelectorAll('.add-btn').forEach(btn => {
                 canaccess = role === 'Agent de securite';
             }
             else if (zoneid === 'archives') {
-                canaccess = role !== 'Nettoyage'; 
+                canaccess = role !== 'Nettoyage';
             }
             else {
                 canaccess = role === 'Manager' || role !== 'Nettoyage' || zoneid !== 'archives';
-                canaccess = true; 
+                canaccess = true;
             }
-                if (canaccess) {
+            if (canaccess) {
                 const item = document.createElement('div');
                 item.className = 'worker-item';
                 item.style.cssText = `
@@ -306,7 +394,7 @@ document.querySelectorAll('.add-btn').forEach(btn => {
                 `;
 
                 item.innerHTML = `
-                    <img src="${emp.photoUrl}" alt="${emp.name}" style="width:50px; height:50px; border-radius:50%; object-fit:cover;">
+                    <img src="${emp.photoUrl}" alt="${emp.name}" style="width:50px; height:50px; border-radius:50%;">
                     <div style="flex:1;">
                         <strong>${emp.name}</strong><br>
                         <small>${emp.role}</small>
@@ -314,20 +402,23 @@ document.querySelectorAll('.add-btn').forEach(btn => {
                     </div>
                 `;
 
-                 item.addEventListener('click', () => {
-                    emp.zoneassigne = zoneid;        
-                    modalworker.style.display = 'none'; 
-                    renderzoneemployees();           
-                    unsignedStaff();                 
+                item.addEventListener('click', () => {
+                    emp.zoneassigne = zoneid;
+                    modalworker.style.display = 'none';
+                    renderzoneemployees();
+                    unsignedStaff();
                 });
 
                 modallist.appendChild(item);
-                }
-            });
-        
+            }
+        });
+
 
         modalworker.style.display = 'flex';
     });
 });
 
-                
+
+
+
+
