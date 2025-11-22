@@ -1,10 +1,10 @@
 let nextId = 1;
 let employees = [{
-    id: nextId++, name: "Salma Alami", role: "Receptionnistes", photoUrl: "https://randomuser.me/api/portraits/women/68.jpg", email: "salma@worksphere.ma", phone: "0612365478", experiences: [{ poste: "Receptionnistes", entreprise: "Hotel", annees: "2020-2024" }], zoneassigne: null
+    id: nextId++, name: "Salma Alami", role: "Receptionnistes", photoUrl: "https://randomuser.me/api/portraits/women/68.jpg", email: "salma@worksphere.ma", phone: "0612365478", experiences: [{ poste: "Receptionnistes", entreprise: "Hotel", startdate : "30-03-2020", enddate : "30-03-2025" }], zoneassigne: null
 }, {
-    id: nextId++, name: "Youssef Benali", role: "Technicien IT", photoUrl: "https://randomuser.me/api/portraits/men/32.jpg", email: "youssef@worksphere.ma", phone: "0654321987", experiences: [{ poste: "Support IT", entreprise: "Orange", annees: "2019-2022" }], zoneassigne: null
+    id: nextId++, name: "Youssef Benali", role: "Technicien IT", photoUrl: "https://randomuser.me/api/portraits/men/32.jpg", email: "youssef@worksphere.ma", phone: "0654321987", experiences: [{ poste: "Support IT", entreprise: "Orange", startdate: "2-08-2019", enddate : "30-03-2022" }], zoneassigne: null
 }, {
-    id: nextId++, name: "Morad Yousfi", role: "Agent de securite", photoUrl: "https://randomuser.me/api/portraits/men/68.jpg", email: "moad@worksphere.ma", phone: "0678901234", experiences: [{ poste: "Agent de sécurité", entreprise: "OCP", annees: "2020-2024" }], zoneassigne: null
+    id: nextId++, name: "Morad Yousfi", role: "Agent de securite", photoUrl: "https://randomuser.me/api/portraits/men/68.jpg", email: "moad@worksphere.ma", phone: "0678901234", experiences: [{ poste: "Agent de securite", entreprise: "OCP", startdate: "2-08-2011", enddate : "30-03-2020"}], zoneassigne: null
 }
 ];
 
@@ -61,10 +61,12 @@ function displayEmployee(emp) {
     if (emp.experiences && emp.experiences.length > 0) {
         experiencesHTML = emp.experiences.map(exp => `
             <div class="experience-item">
-                <strong>${exp.post || 'Poste not specified'}</strong><br>
-                <em>${exp.entreprise || 'Entreprise not specified'}</em><br>
-                <small>FROM ${exp.from || '?'} TO ${exp.to}</small>
+                <p><strong>Post :</strong> ${exp.poste}</p>
+                <p><strong>Entreprise :</strong> ${exp.entreprise}</p>
+                <p><strong>Start Date :</strong> ${exp.startdate || '?'}</p>
+                <p><strong>End Date :</strong> ${exp.enddate || '?'}</p>
             </div>
+            <hr>
         `).join('');
     } else {
         experiencesHTML = '<p>No experience reported.</p>';
@@ -88,8 +90,7 @@ function displayEmployee(emp) {
         <hr>
 
         <h3>Professional Experiences</h3>
-        
-
+        ${experiencesHTML}
         
     `;
 
@@ -239,7 +240,7 @@ function validateForm() {
 }
 
 function validateExperience() {
-    let isValid = true;
+    let isvalid = true;
 
     const lastExp = document.querySelector('.experience-item:last-child');
     if (!lastExp) return true;
@@ -251,38 +252,51 @@ function validateExperience() {
 
     lastExp.querySelectorAll('.error').forEach(e => e.innerHTML = '');
     const textRegex = /^[A-Za-z]{3,}$/;
-
-    if (!textRegex.test(post.value)) {
-        post.nextElementSibling.innerHTML = "post doit contenir au moins 3 lettres";
-        isValid = false;
+    if (!post.value) {
+        post.nextElementSibling.innerHTML = "please select post";
+        isvalid = false;
     }
-
-    if (!textRegex.test(entreprise.value)) {
+    else if (!textRegex.test(post.value)) {
+        post.nextElementSibling.innerHTML = "post doit contenir au moins 3 lettres";
+        isvalid = false;
+    }
+    if (!entreprise.value) {
+        entreprise.nextElementSibling.innerHTML = "please select entreprise";
+        isvalid = false;
+    }
+    else if (!textRegex.test(entreprise.value)) {
         entreprise.nextElementSibling.innerHTML = "entreprise doit contenir au moins 3 lettres";
-        isValid = false;
+        isvalid = false;
     }
 
     const d1 = new Date(debut.value);
     const d2 = new Date(fin.value);
     const today = new Date();
     today.setHours(0,0,0,0);
-
-    if (d1 >= today) {
-        debut.nextElementSibling.innerHTML = "start date must be before today";
-        isValid = false;
+    
+    if (!debut.value) {
+        debut.nextElementSibling.innerHTML = "please select start date";
+        isvalid = false;
     }
-
+    else if (d1 >= today) {
+        debut.nextElementSibling.innerHTML = "start date must be before today";
+        isvalid = false;
+    }
+    if (!fin.value) {
+        fin.nextElementSibling.innerHTML = "please select fin date";
+        isvalid = false;
+    }
     if (d2 >= today) {
         fin.nextElementSibling.innerHTML = "end date must be before today";
-        isValid = false;
+        isvalid = false;
     }
 
     if (d1 >= d2) {
         debut.nextElementSibling.innerHTML = "start date must be before end date";
-        isValid = false;
+        isvalid = false;
     }
 
-    return isValid;
+    return isvalid;
 }
 
 
