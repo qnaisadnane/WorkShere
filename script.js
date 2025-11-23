@@ -63,8 +63,8 @@ function displayEmployee(emp) {
         <div class="experience-item2">
             <p><strong>Post :</strong> ${exp.poste}</p>
             <p><strong>Entreprise :</strong> ${exp.entreprise}</p>
-            <p><strong>Start Date :</strong> ${exp.startdate || '?'}</p>
-            <p><strong>End Date :</strong> ${exp.enddate || '?'}</p>
+            <p><strong>Start Date :</strong> ${exp.startdate}</p>
+            <p><strong>End Date :</strong> ${exp.enddate}</p>
         </div>
         <hr>
     `).join('');
@@ -86,7 +86,7 @@ function displayEmployee(emp) {
          </div>
         <hr>
 
-        <h3>Professional Experiences</h3>
+        <h3 class="pro-exp">Professional Experiences</h3>
         ${experiencesHTML}
     `;
 
@@ -162,14 +162,11 @@ function unsignedStaff() {
  <strong>${emp.name}</strong>
  <span>${emp.role}</span>
  </div>
- <div class="remove-display">
- <button class="display-btn">Display</button>
- </div>
 
  `;
 
 
-        item.querySelector('.display-btn').addEventListener('click', function () {
+        item.addEventListener('click', function () {
             displayEmployee(emp);
         });
 

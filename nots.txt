@@ -1,7 +1,0 @@
-    id: nextId++, name: "Morad Yousfi", role: "Agent de securite",
-    photoUrl: "https://randomuser.me/api/portraits/men/68.jpg", email: "moad@worksphere.ma",
-    phone: "0678901234",
-    experiences: [{ poste: "Agent de securite", entreprise: "OCP", startdate: "2-08-2011", enddate : "30-03-2020"}], zoneassigne: null
-
-                experiences.push({ poste, entreprise, startdate, enddate});
-= [{postnae, entreprisename,}]
