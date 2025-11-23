@@ -247,7 +247,6 @@ form {
 .add-btn:hover{
     background: #fff;
     color: #3498db;
-    font-size: 40px; 
 }
 
 #conference{
@@ -322,7 +321,12 @@ form {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border-radius: 2px solid #3498db;
+}
+
+.assigned-name-role{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;  
 }
 
 .error{
@@ -392,13 +396,6 @@ form {
     gap: 10px;
 }
 
-.assigned-name-role{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
 .modallist-worker{
     position: absolute;
     top: 50%;
@@ -458,11 +455,7 @@ form {
         height: 40px;
         font-size: 30px; 
     }
-    .add-btn:hover{
-    background: #fff;
-    color: #3498db;
-    font-size: 40px; 
-}
+    
 }
 @media screen and (min-width: 768px) and (max-width: 1023px) {
    

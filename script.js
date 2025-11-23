@@ -364,7 +364,7 @@ function renderzoneemployees() {
                 empdiv.innerHTML = `
                     <img src="${emp.photoUrl}" alt="${emp.name}">
                     <div class="assigned-name-role">
-                        <strong>${emp.name}</strong><br>
+                        <strong>${emp.name}</strong>
                         <p>${emp.role}</p>
                     </div>     
                 `;
