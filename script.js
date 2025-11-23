@@ -101,7 +101,6 @@ function displayEmployee(emp) {
     };
 }
 
-
 cancelbtn.addEventListener('click', closeModal);
 
 window.addEventListener('click', (e) => {
@@ -143,7 +142,6 @@ form.addEventListener('submit', (e) => {
     }
 });
 
-
 function unsignedStaff() {
     const list = document.getElementById('unassigned-list');
     list.innerHTML = '';
@@ -165,9 +163,7 @@ function unsignedStaff() {
  <strong>${emp.name}</strong>
  <p>${emp.role}</p>
  </div>
-
  `;
-
         item.addEventListener('click', function () {
             displayEmployee(emp);
         });
@@ -224,21 +220,19 @@ function validateForm() {
     }
 
     return isvalid;
-
 }
 
 function validateExperience(experience){
     
      let isvalid = true;
      const post = experience.querySelector('.post');
-    const entreprise = experience.querySelector('.entreprise');
-    const debut = experience.querySelector('.date-debut');
-    const fin = experience.querySelector('.date-fin');
+     const entreprise = experience.querySelector('.entreprise');
+     const debut = experience.querySelector('.date-debut');
+     const fin = experience.querySelector('.date-fin');
 
     experience.querySelectorAll('.error').forEach(e => e.innerHTML = '');
     const textRegex = /^[A-Za-z]{3,}$/;
-    console.log(experience);
-    console.log(post);
+    
     if (!post.value) {
         post.nextElementSibling.innerHTML = "please select post";
         isvalid = false;
@@ -286,7 +280,6 @@ function validateExperience(experience){
 }
 
 function validateExperiences() {
-    console.log("errorzaz");
     let isvalid = true;
 
     const experiences = document.querySelectorAll('.experience-item');
@@ -298,7 +291,6 @@ function validateExperiences() {
 
     return isvalid;
 }
-
 
 function getzonebyId(id) {
     return zone.find(z => z.id === id);
@@ -342,7 +334,6 @@ function addExperience() {
     if(experiencescontainer.innerHTML==''){
         div.querySelector('.remove-exp').remove();
     }
-    console.log(experiencescontainer);
     experiencescontainer.appendChild(div);
 }
 
@@ -399,7 +390,6 @@ document.querySelectorAll('.add-btn').forEach(btn => {
         }
         employees.forEach(emp => {
             const role = emp.role;
-            const isassigned = emp.zoneassigne !== null;
 
             let canaccess = false;
 
@@ -445,8 +435,3 @@ document.querySelectorAll('.add-btn').forEach(btn => {
         modalworker.style.display = 'flex';
     });
 });
-
-
-
-
-
