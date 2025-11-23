@@ -2,7 +2,7 @@ let nextId = 1;
 let employees = [{
     id: nextId++, name: "Salma Alami", role: "Receptionnistes", photoUrl: "https://randomuser.me/api/portraits/women/68.jpg", email: "salma@worksphere.ma", phone: "0612365478", experiences: [{ poste: "Receptionnistes", entreprise: "Hotel", startdate : "30-03-2020", enddate : "30-03-2025" }], zoneassigne: null
 }, {
-    id: nextId++, name: "Youssef Benali", role: "Technicien IT", photoUrl: "https://randomuser.me/api/portraits/men/32.jpg", email: "youssef@worksphere.ma", phone: "0654321987", experiences: [{ poste: "Support IT", entreprise: "Orange", startdate: "2-08-2019", enddate : "30-03-2022" }], zoneassigne: null
+    id: nextId++, name: "Youssef Benali", role: "Techniciens IT", photoUrl: "https://randomuser.me/api/portraits/men/32.jpg", email: "youssef@worksphere.ma", phone: "0654321987", experiences: [{ poste: "Support IT", entreprise: "Orange", startdate: "2-08-2019", enddate : "30-03-2022" }], zoneassigne: null
 }, {
     id: nextId++, name: "Morad Yousfi", role: "Agent de securite", photoUrl: "https://randomuser.me/api/portraits/men/68.jpg", email: "moad@worksphere.ma", phone: "0678901234", experiences: [{ poste: "Agent de securite", entreprise: "OCP", startdate: "2-08-2011", enddate : "30-03-2020"}], zoneassigne: null
 }
@@ -29,13 +29,14 @@ const openbtnemp = document.getElementById('add-btn-emp');
 const modalworker = document.getElementById('assignmodal');
 const modallist = document.getElementById('modallist');
 
-function createEmployee(name, role, photoUrl, email, phone, experiences = []) {
+function createEmployee(name, role, photoUrl, email, phone, experiences) {
     return {
         id: nextId++,
         name: name,
         role: role,
         photoUrl: photoUrl,
         email: email,
+        phone: phone,
         experiences: experiences,
         zoneassigne: null
     };
@@ -58,19 +59,15 @@ function displayEmployee(emp) {
     const content = document.getElementById('cvContent');
 
     let experiencesHTML = '';
-    if (emp.experiences && emp.experiences.length > 0) {
-        experiencesHTML = emp.experiences.map(exp => `
-            <div class="experience-item">
-                <p><strong>Post :</strong> ${exp.poste}</p>
-                <p><strong>Entreprise :</strong> ${exp.entreprise}</p>
-                <p><strong>Start Date :</strong> ${exp.startdate || '?'}</p>
-                <p><strong>End Date :</strong> ${exp.enddate || '?'}</p>
-            </div>
-            <hr>
-        `).join('');
-    } else {
-        experiencesHTML = '<p>No experience reported.</p>';
-    }
+    experiencesHTML = emp.experiences.map(exp => `
+        <div class="experience-item2">
+            <p><strong>Post :</strong> ${exp.poste}</p>
+            <p><strong>Entreprise :</strong> ${exp.entreprise}</p>
+            <p><strong>Start Date :</strong> ${exp.startdate || '?'}</p>
+            <p><strong>End Date :</strong> ${exp.enddate || '?'}</p>
+        </div>
+        <hr>
+    `).join('');
 
     content.innerHTML = `
         <div class="cv-header">
@@ -91,7 +88,6 @@ function displayEmployee(emp) {
 
         <h3>Professional Experiences</h3>
         ${experiencesHTML}
-        
     `;
 
     modal.style.display = 'block';
@@ -100,13 +96,6 @@ function displayEmployee(emp) {
         if (e.target === modal) modal.style.display = 'none';
     };
 }
-
-
-openbtn.addEventListener('click', () => {
-    modal.style.display = 'flex';
-    const olderrors = document.querySelectorAll('.error');
-    olderrors.forEach(e => e.innerHTML = "");
-});
 
 
 cancelbtn.addEventListener('click', closeModal);
@@ -119,12 +108,13 @@ function closeModal() {
     modal.style.display = 'none';
     form.reset();
     experiencescontainer.innerHTML = '';
-    photopreview.src = 'https://via.placeholder.com/150?text=Photo';
 }
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (validateForm() && validateExperience()) {
+    let isValid = validateForm();
+    let isValid2 = validateExperiences();
+    if (isValid && isValid2) {
         
         const name = document.getElementById('name').value.trim();
         const role = document.getElementById('select-role').value;
@@ -140,7 +130,7 @@ form.addEventListener('submit', (e) => {
             const fin = item.querySelector('.date-fin').value;
 
             if (poste && entreprise && debut && fin) {
-                experiences.push({ poste, entreprise, annees: `${debut}- ${fin}` });
+                experiences.push({ "poste":poste, "entreprise" : entreprise, "startdate" : debut, "enddate" : fin});
             }
         });
         addEmployee(name, role, photoUrl, email, phone, experiences);
@@ -193,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function validateForm() {
     let isvalid = true;
-    const errors = [];
 
     const name = document.getElementById('name');
     const nameRegex = /^[A-Za-z]{3,}$/;
@@ -239,19 +228,18 @@ function validateForm() {
 
 }
 
-function validateExperience() {
-    let isvalid = true;
+function validateExperience(experience){
+    
+     let isvalid = true;
+     const post = experience.querySelector('.post');
+    const entreprise = experience.querySelector('.entreprise');
+    const debut = experience.querySelector('.date-debut');
+    const fin = experience.querySelector('.date-fin');
 
-    const lastExp = document.querySelector('.experience-item:last-child');
-    if (!lastExp) return true;
-
-    const post = lastExp.querySelector('.post');
-    const entreprise = lastExp.querySelector('.entreprise');
-    const debut = lastExp.querySelector('.date-debut');
-    const fin = lastExp.querySelector('.date-fin');
-
-    lastExp.querySelectorAll('.error').forEach(e => e.innerHTML = '');
+    experience.querySelectorAll('.error').forEach(e => e.innerHTML = '');
     const textRegex = /^[A-Za-z]{3,}$/;
+    console.log(experience);
+    console.log(post);
     if (!post.value) {
         post.nextElementSibling.innerHTML = "please select post";
         isvalid = false;
@@ -294,25 +282,24 @@ function validateExperience() {
     if (d1 >= d2) {
         debut.nextElementSibling.innerHTML = "start date must be before end date";
         isvalid = false;
-    }
+    } 
+    return isvalid;
+}
+
+function validateExperiences() {
+    console.log("errorzaz");
+    let isvalid = true;
+
+    const experiences = document.querySelectorAll('.experience-item');
+    experiences.forEach((e) => {
+        if(!validateExperience(e)){
+            isvalid = false;
+        }
+    });
 
     return isvalid;
 }
 
-
-
-function showerrors(errors) {
-    const errore = document.createElement('div');
-    const formActions = document.querySelector('.form-actions');
-
-    errors.forEach(msg => {
-        errore.className = 'error';
-        errore.style.color = '#e74c3c';
-        errore.textContent = msg;
-
-        formActions.before(errore);
-    });
-}
 
 function getzonebyId(id) {
     return zone.find(z => z.id === id);
@@ -335,7 +322,7 @@ function addExperience() {
     div.className = 'experience-item';
 
     div.innerHTML = `
-    <input type="text" class="post" placeholder="Post">
+    <input type="text" name = "post" class="post" placeholder="Post">
     <div class="error"></div>
     <input type="text" class="entreprise" placeholder="Entreprise">
     <div class="error"></div>
@@ -353,14 +340,19 @@ function addExperience() {
     div.querySelector('.remove-exp').addEventListener('click', () => {
         div.remove();
     });
+    if(experiencescontainer.innerHTML==''){
+        div.querySelector('.remove-exp').remove();
+    }
+    console.log(experiencescontainer);
     experiencescontainer.appendChild(div);
 }
 
 addexperiencebtn.addEventListener('click', addExperience);
-openbtn.addEventListener('click', addExperience);
+
 openbtn.addEventListener('click', () => {
     modal.style.display = 'flex';
-    experiencescontainer.innerHTML = '';
+    const olderrors = document.querySelectorAll('.error');
+    olderrors.forEach(e => e.innerHTML = "");
     addExperience();
 });
 
@@ -386,6 +378,11 @@ function renderzoneemployees() {
                         <small>${emp.role}</small> 
                     </div>
                 `;
+                empdiv.addEventListener('click' , () => {
+                    emp.zoneassigne =null;
+                    renderzoneemployees();
+                    unsignedStaff();
+                });
                 employeesdiv.appendChild(empdiv);
             }
         });
@@ -406,31 +403,32 @@ document.querySelectorAll('.add-btn').forEach(btn => {
         employees.forEach(emp => {
             const role = emp.role;
             const isassigned = emp.zoneassigne !== null;
+
             let canaccess = false;
 
             if (zoneid === 'reception') {
-                canaccess = role === 'Receptionnistes';
+                canaccess = role === 'Receptionnistes' || role === 'Manager' || role === 'Nettoyage';
             }
             else if (zoneid === 'servers') {
-                canaccess = role === 'Techniciens IT';
+                canaccess = role === 'Techniciens IT' || role === 'Manager' || role === 'Nettoyage';
             }
             else if (zoneid === 'security') {
-                canaccess = role === 'Agent de securite';
+                canaccess = role === 'Agent de securite' || role === 'Manager' || role === 'Nettoyage';
             }
             else if (zoneid === 'archives') {
-                canaccess = role !== 'Nettoyage';
+                canaccess = role !== 'Nettoyage' || role === 'Manager';
             }
             else {
                 canaccess = role === 'Manager' || role !== 'Nettoyage' || zoneid !== 'archives';
                 canaccess = true;
             }
-            if (canaccess) {
+            if (canaccess && emp.zoneassigne === null) {
                 const item = document.createElement('div');
                 item.className = 'worker-item';
                 item.style.cssText = `
                     display:flex; align-items:center; gap:12px; 
                     padding:10px; border-bottom:1px solid #eee; 
-                    background: ${isassigned ? '#f0f0f0' : '#fff'}
+                    }
                 `;
 
                 item.innerHTML = `
@@ -451,7 +449,6 @@ document.querySelectorAll('.add-btn').forEach(btn => {
                 modallist.appendChild(item);
             }
         });
-
 
         modalworker.style.display = 'flex';
     });
