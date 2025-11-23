@@ -86,9 +86,10 @@ body{
 
 .name,.select-role,
 .url,.email,
-.phone,.experience-post,
-.experience-entreprise,
-.experience-years{
+.phone,.post,
+.entreprise,
+.date-debut,
+.date-fin{
   width: 100%;
   padding: 8px;
   margin: 15px 0;
@@ -115,10 +116,13 @@ form {
     border: 3px solid #3498db;
 }
 
+.btn-form{
+    
+}
+
 .btn-add{
-    margin: 20px 0 0 20px;
     font-family: 'Poppins', sans-serif;
-    width: 150px;
+    width: 130px;
     height: 50px;
     background-color: #0fca0fab;
     color: #fff;
@@ -128,9 +132,8 @@ form {
     text-align: center;
 }
 .btn-cancel{
-    margin: 20px 0 0 20px;
     font-family: 'Poppins', sans-serif;
-    width: 150px;
+    width: 130px;
     height: 50px;
     background-color: #ff0000ab;
     color: #fff;
@@ -170,15 +173,6 @@ form {
     font-weight: 700;
 }
 
-.display-btn{
-    background-color: #ffcc00e1;
-    color: #fff;
-    border: none;
-    border-radius: 1rem;
-    padding: 8px 14px;
-    font-weight: 700;
-}
-
 .remove-exp-div{
     display: flex;
     flex-direction: column;
@@ -201,11 +195,6 @@ form {
     height: 60px;
     border-radius: 50%;
     border: 3px solid white;
-}
-
-.name-role{
-    display: flex;
-    flex-direction: column;
 }
 
 .remove-display{
@@ -233,9 +222,12 @@ form {
 }
 .zone{
     border: 5px solid #000;
+    position: relative;
 }
 
 .modal{
+    display: none;
+    z-index: 10;
     position: fixed;
     top: 0;
     left: 0;
@@ -247,6 +239,10 @@ form {
 }
 
 .add-btn {
+    position: absolute;
+    left: 50%;
+    bottom: 0px;
+    transform: translateX(-50%);
     width: 50px;
     border: none;
     height: 50px;
@@ -321,6 +317,7 @@ form {
     font-weight: 600;
     color: #000;
     margin: 0 0 12px 0;
+    font-size: 20px;
 }
 
 #experiences-container {
@@ -394,6 +391,25 @@ form {
     height: 100%;
     background-color: rgba(0,0,0,0.6);
     overflow-y: auto;
+}
+
+.worker-item{
+     display:flex; 
+     align-items:center; 
+     gap:12px; 
+     padding:10px; 
+     border-bottom:1px solid #eee;
+}
+
+.worker-item img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.name-role{
+    display: flex;
+    
 }
 
 .modallist-worker{

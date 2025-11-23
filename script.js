@@ -5,6 +5,10 @@ let employees = [{
     id: nextId++, name: "Youssef Benali", role: "Techniciens IT", photoUrl: "https://randomuser.me/api/portraits/men/32.jpg", email: "youssef@worksphere.ma", phone: "0654321987", experiences: [{ poste: "Support IT", entreprise: "Orange", startdate: "2-08-2019", enddate : "30-03-2022" }], zoneassigne: null
 }, {
     id: nextId++, name: "Morad Yousfi", role: "Agent de securite", photoUrl: "https://randomuser.me/api/portraits/men/68.jpg", email: "moad@worksphere.ma", phone: "0678901234", experiences: [{ poste: "Agent de securite", entreprise: "OCP", startdate: "2-08-2011", enddate : "30-03-2020"}], zoneassigne: null
+}, {
+    id: nextId++, name: "Mohammed Ali", role: "Manager", photoUrl: "https://randomuser.me/api/portraits/men/69.jpg", email: "mohamed@worksphere.ma", phone: "0601234598", experiences: [{ poste: "Manager", entreprise: "JESA", startdate: "2-08-2018", enddate : "30-03-2022"}], zoneassigne: null
+}, {
+    id: nextId++, name: "Sara Benani", role: "Nettoyage", photoUrl: "https://randomuser.me/api/portraits/women/13.jpg", email: "sara@worksphere.ma", phone: "0601734598", experiences: [{ poste: "Nettoyage", entreprise: "SOGEA", startdate: "2-08-2023", enddate : "30-03-2025"}], zoneassigne: null
 }
 ];
 
@@ -158,13 +162,11 @@ function unsignedStaff() {
         item.innerHTML = `
 
  <img src="${emp.photoUrl}" alt="${emp.name}">
- <div class="name-role">
  <strong>${emp.name}</strong>
- <span>${emp.role}</span>
+ <p>${emp.role}</p>
  </div>
 
  `;
-
 
         item.addEventListener('click', function () {
             displayEmployee(emp);
@@ -370,10 +372,8 @@ function renderzoneemployees() {
                 empdiv.className = 'assigned-employee';
                 empdiv.innerHTML = `
                     <img src="${emp.photoUrl}" alt="${emp.name}">
-                    <div style="flex:1;">
                         <strong>${emp.name}</strong><br>
-                        <small>${emp.role}</small> 
-                    </div>
+                        <p>${emp.role}</p> 
                 `;
                 empdiv.addEventListener('click' , () => {
                     emp.zoneassigne =null;
@@ -422,15 +422,10 @@ document.querySelectorAll('.add-btn').forEach(btn => {
             if (canaccess && emp.zoneassigne === null) {
                 const item = document.createElement('div');
                 item.className = 'worker-item';
-                item.style.cssText = `
-                    display:flex; align-items:center; gap:12px; 
-                    padding:10px; border-bottom:1px solid #eee; 
-                    }
-                `;
 
                 item.innerHTML = `
-                    <img src="${emp.photoUrl}" alt="${emp.name}" style="width:50px; height:50px; border-radius:50%;">
-                    <div style="flex:1;">
+                    <img src="${emp.photoUrl}">
+                    <div class="name-role">
                         <strong>${emp.name}</strong><br>
                         <small>${emp.role}</small> 
                     </div>
