@@ -363,8 +363,10 @@ function renderzoneemployees() {
                 empdiv.className = 'assigned-employee';
                 empdiv.innerHTML = `
                     <img src="${emp.photoUrl}" alt="${emp.name}">
+                    <div class="assigned-name-role">
                         <strong>${emp.name}</strong><br>
-                        <p>${emp.role}</p> 
+                        <p>${emp.role}</p>
+                    </div>     
                 `;
                 empdiv.addEventListener('click' , () => {
                     emp.zoneassigne =null;
