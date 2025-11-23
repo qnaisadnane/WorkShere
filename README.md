@@ -1,8 +1,8 @@
-🏢 WorkSphere – Interactive Staff Management Web App
+# 🏢 WorkSphere – Interactive Staff Management Web App
 WorkSphere is an innovative web application designed to visually, intuitively, and interactively manage staff within a company’s workspace.
 It provides a modern interface that allows adding, organizing, and assigning employees on a live floor plan, while enforcing role-based access rules.
 
-🎯 Project Goals
+# 🎯 Project Goals
 
 
 Provide a highly intuitive UI for adding, moving, and deleting employees across different workplace zones.
@@ -24,7 +24,7 @@ Mobile
 
 Centralize all employee information in one visual platform.
 
-🧩 Key Features
+# 🧩 Key Features
 
 Employee Management
 
@@ -58,7 +58,7 @@ Work experience timeline
 
 Current assigned zone
 
-🏢 Zone Management
+# 🏢 Zone Management
 
 WorkSphere includes a full office floor plan with 6 zones:
 
@@ -83,7 +83,7 @@ Archives Room
 
 Each zone has a “+” button to add an eligible employee.
 
-🛡️ Business Rules (Access Control)
+# 🛡️ Business Rules (Access Control)
 Role-based restrictions include:
 
 
@@ -109,13 +109,13 @@ Zones that must never be empty turn light red when required personnel is missing
 
 
 
-🔢 Zone Capacity Limits
+# 🔢 Zone Capacity Limits
 Each zone has a configurable maximum number of employees, defined in JavaScript.
 
-📱 Responsive Design
+# 📱 Responsive Design
 Support for all screen types
 
-🎨 UI Technologies & Design
+# 🎨 UI Technologies & Design
 
 
 Flexbox
@@ -136,8 +136,7 @@ Smooth modal transitions
 Rounded components and clean layout
 
 
-📘 User Stories
-👨‍🎨 Designer / UI
+# 👨‍🎨 Designer / UI
 
 
 Create intuitive, user-friendly UI.
@@ -149,7 +148,7 @@ Build consistent responsive layouts.
 Designed separate desktop & mobile versions.
 
 
-👨‍💻 Front-End Developer
+# 👨‍💻 Front-End Developer
 
 
 Build HTML structure.
@@ -179,7 +178,7 @@ Deployment on GitHub Pages or Vercel.
 
 
 
-🛠️ Technologies Used
+# 🛠️ Technologies Used
 
 
 HTML5
