@@ -54,6 +54,13 @@ body{
     border-radius: 20px;
 }
 
+.add-worker:hover{
+    background-color: #fff;
+    color: rgb(5, 216, 5);
+    border: 2px solid rgb(5, 216, 5);
+     transition: background-color 0.5s ease;
+}
+
 .fromt{
     margin: 5px 0 0 0;
 }
@@ -247,6 +254,8 @@ form {
 .add-btn:hover{
     background: #fff;
     color: #3498db;
+    transition: background-color 0.5s ease;
+    border: 2px solid #3498db;
 }
 
 #conference{
@@ -454,6 +463,17 @@ form {
         width: 40px;
         height: 40px;
         font-size: 30px; 
+    }
+     .zone-grid{
+        display: grid; 
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        height: 87%;
+        gap: 20px;
+    }
+    #reception, #conference, #staffroom, #servers, #security, #archives {
+        grid-column: auto;
+        grid-row: auto;
     }
     
 }
