@@ -13,12 +13,12 @@ let employees = [{
 ];
 
 let zone = [
-    { id: 1, name: "reception", allowedzone: ["reception"], maxperson: 2 },
-    { id: 2, name: "servers", allowedzone: ["salle des serveurs"], maxperson: 2 },
-    { id: 3, name: "security", allowedzone: ["salle de securite"], maxperson: 2 },
-    { id: 4, name: "archives", allowedzone: ["salle archives"], maxperson: 2 },
-    { id: 5, name: "conference", allowedzone: ["salle conference"], maxperson: 2 },
-    { id: 6, name: "personel", allowedzone: ["salle personel"], maxperson: 2 },
+    { id: 1, name: "reception", allowedzone: ["reception"], maxperson: 4 },
+    { id: 2, name: "servers", allowedzone: ["salle des serveurs"], maxperson: 4 },
+    { id: 3, name: "security", allowedzone: ["salle de securite"], maxperson: 4 },
+    { id: 4, name: "archives", allowedzone: ["salle archives"], maxperson: 4 },
+    { id: 5, name: "conference", allowedzone: ["salle conference"], maxperson: 4 },
+    { id: 6, name: "personel", allowedzone: ["salle personel"], maxperson: 4 },
 ]
 
 const modal = document.getElementById('add-worker-modal');
@@ -63,15 +63,18 @@ function displayEmployee(emp) {
     const content = document.getElementById('cvContent');
 
     let experiencesHTML = '';
-    experiencesHTML = emp.experiences.map(exp => `
+   for (let i = 0; i < emp.experiences.length; i++) {
+    const exp = emp.experiences[i];  
+
+    experiencesHTML += `
         <div class="experience-item2">
-            <p><strong>Post :</strong> ${exp.poste}</p>
+            <p><strong>Poste :</strong> ${exp.poste}</p>
             <p><strong>Entreprise :</strong> ${exp.entreprise}</p>
             <p><strong>Start Date :</strong> ${exp.startdate}</p>
             <p><strong>End Date :</strong> ${exp.enddate}</p>
         </div>
-        <hr>
-    `).join('');
+        <hr>`;
+}
 
     content.innerHTML = `
         <div class="cv-header">
