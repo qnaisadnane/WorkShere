@@ -113,7 +113,6 @@ window.addEventListener('click', (e) => {
 function closeModal() {
     modal.style.display = 'none';
     form.reset();
-    experiencescontainer.innerHTML = '';
 }
 
 form.addEventListener('submit', (e) => {
@@ -136,7 +135,7 @@ form.addEventListener('submit', (e) => {
             const fin = item.querySelector('.date-fin').value;
 
             if (poste && entreprise && debut && fin) {
-                experiences.push({ "poste": poste, "entreprise": entreprise, "startdate": debut, "enddate": fin });
+                experiences.push({ poste: poste, entreprise: entreprise, startdate: debut, enddate: fin });
             }
         });
         addEmployee(name, role, photoUrl, email, phone, experiences);
@@ -162,11 +161,11 @@ function unsignedStaff() {
         item.className = 'staff-item';
         item.innerHTML = `
 
- <img src="${emp.photoUrl}" alt="${emp.name}">
- <strong>${emp.name}</strong>
- <p>${emp.role}</p>
- </div>
- `;
+        <img src="${emp.photoUrl}" alt="${emp.name}">
+        <strong>${emp.name}</strong>
+        <p>${emp.role}</p>
+        </div>
+        `;
         item.addEventListener('click', function () {
             displayEmployee(emp);
         });
@@ -302,9 +301,7 @@ photoUrl.addEventListener('input', () => {
     const url = photoUrl.value.trim();
     if (url && url.startsWith('http')) {
         photopreview.src = url;
-        photopreview.onerror = () => {
-            photopreview.src = 'https://via.placeholder.com/150?text=Invalid';
-        };
+        
     } else {
         photopreview.src = 'https://via.placeholder.com/150?text=Photo';
     }
