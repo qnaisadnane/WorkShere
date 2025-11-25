@@ -1,24 +1,24 @@
 let nextId = 1;
 let employees = [{
-    id: nextId++, name: "Salma Alami", role: "Receptionnistes", photoUrl: "https://randomuser.me/api/portraits/women/68.jpg", email: "salma@worksphere.ma", phone: "0612365478", experiences: [{ poste: "Receptionnistes", entreprise: "Hotel", startdate : "30-03-2020", enddate : "30-03-2025" }], zoneassigne: null
+    id: nextId++, name: "Salma Alami", role: "Receptionnistes", photoUrl: "https://randomuser.me/api/portraits/women/68.jpg", email: "salma@worksphere.ma", phone: "0612365478", experiences: [{ poste: "Receptionnistes", entreprise: "Hotel", startdate: "30-03-2020", enddate: "30-03-2025" }], zoneassigne: null
 }, {
-    id: nextId++, name: "Youssef Benali", role: "Techniciens IT", photoUrl: "https://randomuser.me/api/portraits/men/32.jpg", email: "youssef@worksphere.ma", phone: "0654321987", experiences: [{ poste: "Support IT", entreprise: "Orange", startdate: "2-08-2019", enddate : "30-03-2022" }], zoneassigne: null
+    id: nextId++, name: "Youssef Benali", role: "Techniciens IT", photoUrl: "https://randomuser.me/api/portraits/men/32.jpg", email: "youssef@worksphere.ma", phone: "0654321987", experiences: [{ poste: "Support IT", entreprise: "Orange", startdate: "2-08-2019", enddate: "30-03-2022" }], zoneassigne: null
 }, {
-    id: nextId++, name: "Morad Yousfi", role: "Agent de securite", photoUrl: "https://randomuser.me/api/portraits/men/68.jpg", email: "moad@worksphere.ma", phone: "0678901234", experiences: [{ poste: "Agent de securite", entreprise: "OCP", startdate: "2-08-2011", enddate : "30-03-2020"}], zoneassigne: null
+    id: nextId++, name: "Morad Yousfi", role: "Agent de securite", photoUrl: "https://randomuser.me/api/portraits/men/68.jpg", email: "moad@worksphere.ma", phone: "0678901234", experiences: [{ poste: "Agent de securite", entreprise: "OCP", startdate: "2-08-2011", enddate: "30-03-2020" }], zoneassigne: null
 }, {
-    id: nextId++, name: "Mohammed Ali", role: "Manager", photoUrl: "https://randomuser.me/api/portraits/men/69.jpg", email: "mohamed@worksphere.ma", phone: "0601234598", experiences: [{ poste: "Manager", entreprise: "JESA", startdate: "2-08-2018", enddate : "30-03-2022"}], zoneassigne: null
+    id: nextId++, name: "Mohammed Ali", role: "Manager", photoUrl: "https://randomuser.me/api/portraits/men/69.jpg", email: "mohamed@worksphere.ma", phone: "0601234598", experiences: [{ poste: "Manager", entreprise: "JESA", startdate: "2-08-2018", enddate: "30-03-2022" }], zoneassigne: null
 }, {
-    id: nextId++, name: "Sara Benani", role: "Nettoyage", photoUrl: "https://randomuser.me/api/portraits/women/13.jpg", email: "sara@worksphere.ma", phone: "0601734598", experiences: [{ poste: "Nettoyage", entreprise: "SOGEA", startdate: "2-08-2023", enddate : "30-03-2025"}], zoneassigne: null
+    id: nextId++, name: "Sara Benani", role: "Nettoyage", photoUrl: "https://randomuser.me/api/portraits/women/13.jpg", email: "sara@worksphere.ma", phone: "0601734598", experiences: [{ poste: "Nettoyage", entreprise: "SOGEA", startdate: "2-08-2023", enddate: "30-03-2025" }], zoneassigne: null
 }
 ];
 
 let zone = [
-    { id: 1, name: "reception", allowedzone: ["reception"] },
-    { id: 2, name: "salle des serveurs ", allowedzone: ["salle des serveurs"] },
-    { id: 3, name: "salle de securite", allowedzone: ["salle de securite"] },
-    { id: 4, name: "salle archivs", allowedzone: ["salle archivs"] },
-    { id: 5, name: "salle conference", allowedzone: ["salle conference"] },
-    { id: 6, name: "salle personel", allowedzone: ["salle personel"] },
+    { id: 1, name: "reception", allowedzone: ["reception"], maxperson: 2 },
+    { id: 2, name: "servers", allowedzone: ["salle des serveurs"], maxperson: 2 },
+    { id: 3, name: "security", allowedzone: ["salle de securite"], maxperson: 2 },
+    { id: 4, name: "archives", allowedzone: ["salle archives"], maxperson: 2 },
+    { id: 5, name: "conference", allowedzone: ["salle conference"], maxperson: 2 },
+    { id: 6, name: "personel", allowedzone: ["salle personel"], maxperson: 2 },
 ]
 
 const modal = document.getElementById('add-worker-modal');
@@ -118,7 +118,7 @@ form.addEventListener('submit', (e) => {
     let isValid = validateForm();
     let isValid2 = validateExperiences();
     if (isValid && isValid2) {
-        
+
         const name = document.getElementById('name').value.trim();
         const role = document.getElementById('select-role').value;
         const photoUrl = document.getElementById('photo').value.trim() || "https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small/profile-icon-design-free-vector.jpg";
@@ -133,7 +133,7 @@ form.addEventListener('submit', (e) => {
             const fin = item.querySelector('.date-fin').value;
 
             if (poste && entreprise && debut && fin) {
-                experiences.push({ "poste":poste, "entreprise" : entreprise, "startdate" : debut, "enddate" : fin});
+                experiences.push({ "poste": poste, "entreprise": entreprise, "startdate": debut, "enddate": fin });
             }
         });
         addEmployee(name, role, photoUrl, email, phone, experiences);
@@ -222,17 +222,17 @@ function validateForm() {
     return isvalid;
 }
 
-function validateExperience(experience){
-    
-     let isvalid = true;
-     const post = experience.querySelector('.post');
-     const entreprise = experience.querySelector('.entreprise');
-     const debut = experience.querySelector('.date-debut');
-     const fin = experience.querySelector('.date-fin');
+function validateExperience(experience) {
+
+    let isvalid = true;
+    const post = experience.querySelector('.post');
+    const entreprise = experience.querySelector('.entreprise');
+    const debut = experience.querySelector('.date-debut');
+    const fin = experience.querySelector('.date-fin');
 
     experience.querySelectorAll('.error').forEach(e => e.innerHTML = '');
     const textRegex = /^[A-Za-z]{3,}$/;
-    
+
     if (!post.value) {
         post.nextElementSibling.innerHTML = "please select post";
         isvalid = false;
@@ -253,8 +253,7 @@ function validateExperience(experience){
     const d1 = new Date(debut.value);
     const d2 = new Date(fin.value);
     const today = new Date();
-    today.setHours(0,0,0,0);
-    
+
     if (!debut.value) {
         debut.nextElementSibling.innerHTML = "please select start date";
         isvalid = false;
@@ -275,7 +274,7 @@ function validateExperience(experience){
     if (d1 >= d2) {
         debut.nextElementSibling.innerHTML = "start date must be before end date";
         isvalid = false;
-    } 
+    }
     return isvalid;
 }
 
@@ -284,7 +283,7 @@ function validateExperiences() {
 
     const experiences = document.querySelectorAll('.experience-item');
     experiences.forEach((e) => {
-        if(!validateExperience(e)){
+        if (!validateExperience(e)) {
             isvalid = false;
         }
     });
@@ -331,7 +330,7 @@ function addExperience() {
     div.querySelector('.remove-exp').addEventListener('click', () => {
         div.remove();
     });
-    if(experiencescontainer.innerHTML==''){
+    if (experiencescontainer.innerHTML == '') {
         div.querySelector('.remove-exp').remove();
     }
     experiencescontainer.appendChild(div);
@@ -368,8 +367,8 @@ function renderzoneemployees() {
                         <p>${emp.role}</p>
                     </div>     
                 `;
-                empdiv.addEventListener('click' , () => {
-                    emp.zoneassigne =null;
+                empdiv.addEventListener('click', () => {
+                    emp.zoneassigne = null;
                     renderzoneemployees();
                     unsignedStaff();
                 });
@@ -408,7 +407,6 @@ document.querySelectorAll('.add-btn').forEach(btn => {
                 canaccess = role !== 'Nettoyage' || role === 'Manager';
             }
             else {
-                canaccess = role === 'Manager' || role !== 'Nettoyage' || zoneid !== 'archives';
                 canaccess = true;
             }
             if (canaccess && emp.zoneassigne === null) {
@@ -424,10 +422,12 @@ document.querySelectorAll('.add-btn').forEach(btn => {
                 `;
 
                 item.addEventListener('click', () => {
-                    emp.zoneassigne = zoneid;
-                    modalworker.style.display = 'none';
-                    renderzoneemployees();
-                    unsignedStaff();
+                    if (maxEmployeeZone(zoneid)) {
+                        emp.zoneassigne = zoneid;
+                        modalworker.style.display = 'none';
+                        renderzoneemployees();
+                        unsignedStaff();
+                    }
                 });
 
                 modallist.appendChild(item);
@@ -437,3 +437,15 @@ document.querySelectorAll('.add-btn').forEach(btn => {
         modalworker.style.display = 'flex';
     });
 });
+
+function maxEmployeeZone(zoneid) {
+    const zoneConfig = zone.find(z => z.name === zoneid);
+    const assignedCount = employees.filter(emp => emp.zoneassigne === zoneid).length;
+
+    if (assignedCount >= zoneConfig.maxperson) {
+        alert('zone is full');
+        return false;
+    }
+
+    return true;
+}
